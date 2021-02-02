@@ -1,0 +1,22 @@
+.list {
+  list-style: none;
+}
+.item {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+  margin-right: 10px;
+  font-weight: 400;
+  font-size: 18px;
+  font-style: italic;
+  text-align: initial;
+  min-width: 150px;
+}
+
+.text {
+  margin: 0;
+  text-align: initial;
+}
