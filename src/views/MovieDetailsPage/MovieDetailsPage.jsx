@@ -1,8 +1,16 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
-import { useParams, Route, useRouteMatch, Link } from 'react-router-dom';
+import {
+  useParams,
+  Route,
+  useRouteMatch,
+  Link,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import filmsAPI from '../../services/films-api';
 import PageLoader from '../../components/Loader/Loader';
+import GoBackButton from '../../components/GoBackButton/GoBackButton';
 import s from './MovieDetailsPage.css';
 
 const Cast = lazy(() =>
@@ -21,12 +29,20 @@ export default function MovieDetailsPage() {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('idle');
 
+  const history = useHistory();
+  const location = useLocation();
+
+  const backToPrevPage = () => {
+    history.push(location?.state?.from ?? '/');
+  };
+
   const oneFilmId = Number(movieId.slice(1));
 
   /* const oneFilmId = Number(movieId.replace(/[^0-9.-]+/g, '')); 
   Этот простой фрагмент заменит ничем все, что не является числом.
 
 */
+
   useEffect(() => {
     setStatus('pending');
 
@@ -46,6 +62,7 @@ export default function MovieDetailsPage() {
 
         {status === 'resolved' && (
           <>
+            <GoBackButton onClick={backToPrevPage} />
             <MovieCard movie={movie} />
 
             <Suspense fallback={<PageLoader />}>
