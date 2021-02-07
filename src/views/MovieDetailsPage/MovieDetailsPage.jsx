@@ -31,6 +31,8 @@ export default function MovieDetailsPage() {
 
   const history = useHistory();
   const location = useLocation();
+  console.log('history', history);
+  console.log('location', location);
 
   const backToPrevPage = () => {
     history.push(location?.state?.from ?? '/');
@@ -66,10 +68,22 @@ export default function MovieDetailsPage() {
             <MovieCard movie={movie} />
 
             <Suspense fallback={<PageLoader />}>
-              <Link to={`${url}/cast`} className={s.details}>
+              <Link
+                to={{
+                  pathname: `${url}/cast`,
+                  state: { from: location.state.from },
+                }}
+                className={s.details}
+              >
                 Cast
               </Link>
-              <Link to={`${url}/reviews`} className={s.details}>
+              <Link
+                to={{
+                  pathname: `${url}/reviews`,
+                  state: { from: location.state.from },
+                }}
+                className={s.details}
+              >
                 Reviews
               </Link>
               <Route path={`${url}/cast`}>
